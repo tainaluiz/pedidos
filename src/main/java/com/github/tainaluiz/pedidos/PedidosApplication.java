@@ -74,8 +74,13 @@ public class PedidosApplication implements CommandLineRunner {
 	private void initDatabase() throws ParseException {
 		Categoria cat1 = new Categoria("Informática");
 		Categoria cat2 = new Categoria("Escritório");
+		Categoria cat3 = new Categoria("Cozinha");
+		Categoria cat4 = new Categoria("Saúde");
+		Categoria cat5 = new Categoria("Brinquedos");
+		Categoria cat6 = new Categoria("Moda");
+		Categoria cat7 = new Categoria("Casa");
 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 
 		Produto p1 = new Produto("Computador", 2000d);
 		Produto p2 = new Produto("Impressora", 800d);
