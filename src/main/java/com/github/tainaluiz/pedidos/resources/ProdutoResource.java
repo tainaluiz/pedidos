@@ -20,7 +20,7 @@ public class ProdutoResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> find(@PathVariable Long id) {
 		Produto obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok(obj);
 	}
 
 }

@@ -34,7 +34,7 @@ public class CategoriaResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Long id) {
 		Categoria obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok(obj);
 	}
 
 	@PostMapping
@@ -63,7 +63,7 @@ public class CategoriaResource {
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> list = service.findAll();
 		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.ok(listDTO);
 	}
 
 	@GetMapping("/page")
@@ -73,7 +73,7 @@ public class CategoriaResource {
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Categoria> list = service.findPage(page, size, orderBy, direction);
 		Page<CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.ok(listDTO);
 	}
 
 }
