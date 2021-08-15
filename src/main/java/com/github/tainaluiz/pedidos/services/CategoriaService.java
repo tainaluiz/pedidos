@@ -11,6 +11,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import com.github.tainaluiz.pedidos.domain.Categoria;
+import com.github.tainaluiz.pedidos.dto.CategoriaDTO;
 import com.github.tainaluiz.pedidos.repositories.CategoriaRepository;
 import com.github.tainaluiz.pedidos.services.exceptions.DataIntegrityException;
 import com.github.tainaluiz.pedidos.services.exceptions.IllegalParamException;
@@ -62,5 +63,9 @@ public class CategoriaService {
 			throw new NoPropertyException(String.format("Propriedade %s não encontrada no objeto %s!", orderBy,
 					Categoria.class.getSimpleName()));
 		}
+	}
+
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 }
