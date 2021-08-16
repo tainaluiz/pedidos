@@ -27,6 +27,11 @@ public class Cidade implements Serializable {
 
 	}
 
+	public Cidade(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Cidade(Long id, String nome) {
 		super();
 		this.id = id;

@@ -21,16 +21,13 @@ public enum EstadoPagamento {
 	}
 
 	public static EstadoPagamento toEnum(Integer codigo) {
-		if (codigo == null) {
-			return null;
-		}
-
-		for (EstadoPagamento x : values()) {
-			if (codigo.equals(x.getCodigo())) {
-				return x;
+		if (codigo != null) {
+			for (EstadoPagamento x : values()) {
+				if (codigo.equals(x.getCodigo())) {
+					return x;
+				}
 			}
 		}
-
-		throw new IllegalArgumentException("Id inválido: " + codigo);
+		return null;
 	}
 }

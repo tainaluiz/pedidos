@@ -9,10 +9,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.github.tainaluiz.pedidos.domain.Cidade;
 import com.github.tainaluiz.pedidos.domain.Cliente;
+import com.github.tainaluiz.pedidos.domain.Endereco;
+import com.github.tainaluiz.pedidos.domain.enums.TipoCliente;
 import com.github.tainaluiz.pedidos.dto.ClienteDTO;
+import com.github.tainaluiz.pedidos.dto.ClienteNewDTO;
 import com.github.tainaluiz.pedidos.repositories.ClienteRepository;
+import com.github.tainaluiz.pedidos.repositories.EnderecoRepository;
 import com.github.tainaluiz.pedidos.services.exceptions.DataIntegrityException;
 import com.github.tainaluiz.pedidos.services.exceptions.IllegalParamException;
 import com.github.tainaluiz.pedidos.services.exceptions.NoPropertyException;
@@ -24,13 +30,20 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repo;
 
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
 	public Cliente find(Long id) throws ObjectNotFoundException {
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				String.format("Objeto %s não encontrado. Id: %d", Cliente.class.getSimpleName(), id)));
 	}
 
+	@Transactional
 	public Cliente insert(Cliente obj) {
-		return repo.save(obj);
+		obj.setId(null);
+		obj = repo.save(obj);
+		enderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
 	}
 
 	public Cliente update(Cliente obj) {
@@ -69,6 +82,23 @@ public class ClienteService {
 
 	public Cliente fromDTO(ClienteDTO objDTO) {
 		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
+	}
+
+	public Cliente fromDTO(ClienteNewDTO objDTO) {
+		Cliente obj = new Cliente(objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(),
+				TipoCliente.toEnum(objDTO.getTipo()));
+		Cidade cidade = new Cidade(objDTO.getCidadeId());
+		Endereco endereco = new Endereco(objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(),
+				objDTO.getBairro(), objDTO.getCep(), obj, cidade);
+		obj.getEnderecos().add(endereco);
+		obj.getTelefones().add(objDTO.getTelefone1());
+		if (objDTO.getTelefone2() != null) {
+			obj.getTelefones().add(objDTO.getTelefone2());
+		}
+		if (objDTO.getTelefone2() != null) {
+			obj.getTelefones().add(objDTO.getTelefone3());
+		}
+		return obj;
 	}
 
 }

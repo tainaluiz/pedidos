@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.github.tainaluiz.pedidos.domain.Cliente;
 import com.github.tainaluiz.pedidos.dto.ClienteDTO;
+import com.github.tainaluiz.pedidos.dto.ClienteNewDTO;
 import com.github.tainaluiz.pedidos.services.ClienteService;
 
 @RestController
@@ -38,7 +39,7 @@ public class ClienteResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
 		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
