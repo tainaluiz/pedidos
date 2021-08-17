@@ -85,12 +85,28 @@ public class PedidosApplication implements CommandLineRunner {
 		Produto p1 = new Produto("Computador", 2000d);
 		Produto p2 = new Produto("Impressora", 800d);
 		Produto p3 = new Produto("Mouse", 80d);
+		Produto p4 = new Produto("Fogão", 500d);
+		Produto p5 = new Produto("Geladeira", 2000d);
+		Produto p6 = new Produto("Boneca", 100d);
+		Produto p7 = new Produto("Camiseta", 50d);
+		Produto p8 = new Produto("Calça", 70d);
+		Produto p9 = new Produto("Mesa de escritório", 100d);
+		Produto p10 = new Produto("Barra de Cereal", 1.5);
+		Produto p11 = new Produto("Jogo de cama", 100d);
 
 		p1.getCategorias().add(cat1);
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().add(cat1);
+		p4.getCategorias().add(cat3);
+		p5.getCategorias().add(cat3);
+		p6.getCategorias().add(cat5);
+		p7.getCategorias().add(cat6);
+		p8.getCategorias().add(cat6);
+		p9.getCategorias().add(cat2);
+		p10.getCategorias().add(cat4);
+		p11.getCategorias().add(cat7);
 
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
 		Estado est1 = new Estado("Minas Gerais");
 		Estado est2 = new Estado("São Paulo");
