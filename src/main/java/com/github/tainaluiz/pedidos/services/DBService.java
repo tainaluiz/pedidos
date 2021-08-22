@@ -20,6 +20,7 @@ import com.github.tainaluiz.pedidos.domain.PagamentoComCartao;
 import com.github.tainaluiz.pedidos.domain.Pedido;
 import com.github.tainaluiz.pedidos.domain.Produto;
 import com.github.tainaluiz.pedidos.domain.enums.EstadoPagamento;
+import com.github.tainaluiz.pedidos.domain.enums.Perfil;
 import com.github.tainaluiz.pedidos.domain.enums.TipoCliente;
 import com.github.tainaluiz.pedidos.repositories.CategoriaRepository;
 import com.github.tainaluiz.pedidos.repositories.CidadeRepository;
@@ -112,11 +113,15 @@ public class DBService {
 
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente("Maria Silva", "marisilva@gmail.com", "36378912377", TipoCliente.PESSOAFISICA,
+		Cliente cli1 = new Cliente("Maria Silva", "marisilva@teste.com", "36378912377", TipoCliente.PESSOAFISICA,
 				passEncoder.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
-		clienteRepository.save(cli1);
+		Cliente cli2 = new Cliente("Ana Júlia", "anajulia@teste.com", "36378912377", TipoCliente.PESSOAFISICA,
+				passEncoder.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 
 		Endereco e1 = new Endereco("Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco("Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
