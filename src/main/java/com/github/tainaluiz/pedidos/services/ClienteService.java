@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.tainaluiz.pedidos.domain.Cidade;
 import com.github.tainaluiz.pedidos.domain.Cliente;
 import com.github.tainaluiz.pedidos.domain.Endereco;
+import com.github.tainaluiz.pedidos.domain.enums.Perfil;
 import com.github.tainaluiz.pedidos.domain.enums.TipoCliente;
 import com.github.tainaluiz.pedidos.dto.ClienteDTO;
 import com.github.tainaluiz.pedidos.dto.ClienteNewDTO;
 import com.github.tainaluiz.pedidos.repositories.ClienteRepository;
 import com.github.tainaluiz.pedidos.repositories.EnderecoRepository;
+import com.github.tainaluiz.pedidos.security.UserSS;
+import com.github.tainaluiz.pedidos.services.exceptions.AuthorizationException;
 import com.github.tainaluiz.pedidos.services.exceptions.DataIntegrityException;
 import com.github.tainaluiz.pedidos.services.exceptions.IllegalParamException;
 import com.github.tainaluiz.pedidos.services.exceptions.NoPropertyException;
@@ -38,6 +41,12 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	public Cliente find(Long id) throws ObjectNotFoundException {
+		UserSS user = UserService.authenticated();
+		
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				String.format("Objeto %s não encontrado. Id: %d", Cliente.class.getSimpleName(), id)));
 	}
