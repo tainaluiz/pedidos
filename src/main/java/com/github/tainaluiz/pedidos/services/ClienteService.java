@@ -1,5 +1,6 @@
 package com.github.tainaluiz.pedidos.services;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.tainaluiz.pedidos.domain.Cidade;
 import com.github.tainaluiz.pedidos.domain.Cliente;
@@ -40,13 +42,16 @@ public class ClienteService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
+	@Autowired
+	private S3Service s3Service;
+
 	public Cliente find(Long id) throws ObjectNotFoundException {
 		UserSS user = UserService.authenticated();
-		
+
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		
+
 		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				String.format("Objeto %s não encontrado. Id: %d", Cliente.class.getSimpleName(), id)));
 	}
@@ -112,6 +117,10 @@ public class ClienteService {
 			obj.getTelefones().add(objDTO.getTelefone3());
 		}
 		return obj;
+	}
+
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 
 }

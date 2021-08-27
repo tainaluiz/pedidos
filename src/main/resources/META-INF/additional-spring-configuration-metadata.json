@@ -1,5 +1,39 @@
-{"properties": [{
-  "name": "default.sender",
-  "type": "java.lang.String",
-  "description": "Utilizado para definir o remetente de envios de email"
-}]}
+{
+	"properties": [
+		{
+			"name": "default.sender",
+			"type": "java.lang.String",
+			"description": "Utilizado para definir o remetente de envios de email"
+		},
+		{
+			"name": "jwt.secret",
+			"type": "java.lang.String",
+			"description": "Chave para criptografia"
+		},
+		{
+			"name": "jwt.expiration",
+			"type": "java.lang.Long",
+			"description": "Tempo de validade do token"
+		},
+		{
+			"name": "aws.access_key_id",
+			"type": "java.lang.String",
+			"description": "Chave de acesso do AWS"
+		},
+		{
+			"name": "aws.secret_acess_key",
+			"type": "java.lang.String",
+			"description": "Password do AWS"
+		},
+		{
+			"name": "aws.s3_bucket",
+			"type": "java.lang.String",
+			"description": "Nome do bucket S3 AWS"
+		},
+		{
+			"name": "aws.s3_region",
+			"type": "java.lang.String",
+			"description": "Região do bucket S3 AWS"
+		}
+	]
+}
