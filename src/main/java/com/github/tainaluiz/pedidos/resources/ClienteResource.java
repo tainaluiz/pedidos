@@ -88,4 +88,10 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@GetMapping("/email")
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(name = "email") String email) {
+		Cliente obj = service.findByEmail(email);
+		return ResponseEntity.ok(obj);
+	}
+
 }

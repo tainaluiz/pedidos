@@ -2,7 +2,9 @@ package com.github.tainaluiz.pedidos.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -88,6 +90,8 @@ public class DBService {
 		Produto p10 = new Produto("Barra de Cereal", 1.5);
 		Produto p11 = new Produto("Jogo de cama", 100d);
 
+		List<Produto> produtosCat1 = createProdutosCategoria1(cat1);
+
 		p1.getCategorias().add(cat1);
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().add(cat1);
@@ -101,6 +105,7 @@ public class DBService {
 		p11.getCategorias().add(cat7);
 
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
+		produtoRepository.saveAll(produtosCat1);
 
 		Estado est1 = new Estado("Minas Gerais");
 		Estado est2 = new Estado("São Paulo");
@@ -148,4 +153,15 @@ public class DBService {
 
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
+
+	private List<Produto> createProdutosCategoria1(Categoria cat1) {
+		List<Produto> produtos = new ArrayList<>();
+		for (int i = 12; i <= 50; i++) {
+			Produto p = new Produto("Produto " + i, 10d);
+			p.getCategorias().add(cat1);
+			produtos.add(p);
+		}
+		return produtos;
+	}
+
 }
