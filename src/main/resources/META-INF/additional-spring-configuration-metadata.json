@@ -33,7 +33,17 @@
 		{
 			"name": "aws.s3_region",
 			"type": "java.lang.String",
-			"description": "Regi�o do bucket S3 AWS"
+			"description": "Região do bucket S3 AWS"
+		},
+		{
+			"name": "img.prefix.client.profile",
+			"type": "java.lang.String",
+			"description": "Prefixo utilizado nos arquivos de perfil do cliente"
+		},
+		{
+			"name": "img.profile.size",
+			"type": "java.lang.Integer",
+			"description": "Dimensão da imagem de perfil do cliente"
 		}
 	]
 }
