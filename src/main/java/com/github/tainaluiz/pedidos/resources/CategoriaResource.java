@@ -25,6 +25,8 @@ import com.github.tainaluiz.pedidos.domain.Categoria;
 import com.github.tainaluiz.pedidos.dto.CategoriaDTO;
 import com.github.tainaluiz.pedidos.services.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -32,6 +34,7 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 
+	@ApiOperation(value = "Busca por id")
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Long id) {
 		Categoria obj = service.find(id);
