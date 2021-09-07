@@ -89,7 +89,7 @@ public class ClienteResource {
 	}
 
 	@GetMapping("/email")
-	public ResponseEntity<Cliente> findByEmail(@RequestParam(name = "email") String email) {
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(name = "value") String email) {
 		Cliente obj = service.findByEmail(email);
 		return ResponseEntity.ok(obj);
 	}
